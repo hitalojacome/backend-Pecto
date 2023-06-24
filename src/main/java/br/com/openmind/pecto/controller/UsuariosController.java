@@ -3,6 +3,9 @@ package br.com.openmind.pecto.controller;
 import br.com.openmind.pecto.model.Usuarios;
 import br.com.openmind.pecto.repository.UsuariosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,7 +40,15 @@ public class UsuariosController {
     // crud = CREATE, READ, UPDATE and DELETE
 
     @PostMapping // método create (criar novos usuários)
-    public String cadastrarUsuarios(@RequestBody Usuarios users) {
+    public String cadastrarUsuarios(@Validated @RequestBody Usuarios users, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            // Se houver erros de validação, retorne uma resposta com os erros
+            StringBuilder errors = new StringBuilder();
+            for (ObjectError error : bindingResult.getAllErrors()) {
+                errors.append(error.getDefaultMessage()).append("; ");
+            }
+            return "Erro de validação: " + errors.toString();
+        }
         try {
             usuariosRepository.save(users);
             return "Usuário cadastrado com sucesso!";

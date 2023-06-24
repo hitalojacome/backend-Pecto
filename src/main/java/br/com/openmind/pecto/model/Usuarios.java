@@ -6,9 +6,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
 
+@Validated
 @Entity
 @Table(name="tb_usuarios")
 public class Usuarios {
