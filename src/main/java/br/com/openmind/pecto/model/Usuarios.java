@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import jdk.jfr.Name;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.validation.annotation.Validated;
 
@@ -20,14 +21,17 @@ public class Usuarios {
     private Integer idUsuario;
 
     @NotBlank(message = "O campo nome é obrigatório.")
+    @Pattern(regexp = "^[A-Z].*", message = "O nome deve iniciar com letra maiúscula.")
+    @Size(min = 10, message = "O nome deve ter no mínimo 10 caracteres.")
     @Column(nullable = false)
     private String nome;
 
-    @Email(message = "Email inválido.")
     @NotBlank(message = "O campo email é obrigatório.")
+    @Email(message = "Email inválido.")
     @Column(nullable = false, unique = true)
     private String email;
 
+    @NotBlank(message = "O campo CPF é obrigatório.")
     @CPF(message = "CPF inválido.")
     @Column(nullable = false, unique = true, length = 11)
     private String cpf;
@@ -38,10 +42,10 @@ public class Usuarios {
     @NotBlank(message = "O campo senha é obrigatório.")
     @Size(min = 8, message = "A senha deve conter no mínimo 8 caracteres")
     @Pattern(
-            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$",
-            message = "A senha deve conter pelo menos uma letra minúscula, uma letra maiúscula e um dígito"
+            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%&*\\[{;/:]).+$",
+            message = "A senha deve conter pelo menos uma letra minúscula, uma letra maiúscula, um número e um caractere especial."
     )
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String senha;
 
     //Getters and Setters
