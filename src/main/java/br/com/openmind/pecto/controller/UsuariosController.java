@@ -15,8 +15,8 @@ import java.util.Optional;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/usuarios")
 @CrossOrigin(origins = "*")
+@RequestMapping("/usuarios")
 public class UsuariosController {
 
     @Autowired
@@ -41,7 +41,7 @@ public class UsuariosController {
     // crud = CREATE, READ, UPDATE and DELETE
 
     @PostMapping // método create (criar novos usuários)
-    public String cadastrarUsuarios(@RequestBody @Valid Usuarios users) {
+    public String cadastrarUsuarios(@RequestBody Usuarios users) {
         try {
             usuariosRepository.save(users);
             return "Usuário cadastrado com sucesso!";
