@@ -41,7 +41,7 @@ public class UsuariosController {
     // crud = CREATE, READ, UPDATE and DELETE
 
     @PostMapping // método create (criar novos usuários)
-    public String cadastrarUsuarios(@RequestBody Usuarios users) {
+    public String cadastrarUsuarios(@RequestBody @Valid Usuarios users) {
         try {
             usuariosRepository.save(users);
             return "Usuário cadastrado com sucesso!";
